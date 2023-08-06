@@ -1,16 +1,45 @@
 "use client";
 
 import Link from "next/link";
+import { onValue, ref } from "firebase/database";
+import { useEffect, useState } from "react";
 import { Button } from "../../atoms/Button";
 import { useRouter } from "next/navigation";
 import { IPlants } from "@/app/plants/page";
+import { database } from "@/app/services/firebase";
 
-interface TableProps {
-  plants: Array<IPlants>;
-}
-
-export const Table = ({ plants }: TableProps) => {
+export const Table = () => {
   const router = useRouter();
+
+  const [plants, setPlants] = useState<[] | Array<IPlants>>([]);
+
+  useEffect(() => {
+    const starCountRef = ref(database, "plants");
+    onValue(
+      starCountRef,
+      (snapshot) => {
+        snapshot.forEach((childSnapshot) => {
+          const childKey = childSnapshot.key;
+          const childData = childSnapshot.val();
+          setPlants((old) => [
+            ...old,
+            {
+              id: childKey,
+              name: childData.name,
+              maxHumidity: childData.maxHumidity,
+              minHumidity: childData.minHumidity,
+              lastIrrigation: childData.lastIrrigation,
+              timeOfIrrigation: childData.timeOfIrrigation,
+              currentHumidity: childData.currentHumidity,
+            },
+          ]);
+        });
+      },
+      {
+        onlyOnce: true,
+      }
+    );
+  }, []);
 
   return (
     <div className="pt-5 ">
