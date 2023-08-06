@@ -23,7 +23,7 @@ export const Menu = () => {
         <Li
           icon={<PiPlant color="#5C5C5C" />}
           redirect="/plants"
-          active={pathname === "/plants"}
+          active={pathname.includes("/plants")}
         >
           Plantas
         </Li>
