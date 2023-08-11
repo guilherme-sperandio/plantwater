@@ -13,7 +13,9 @@ export const titles: ITitles = {
 };
 
 export const texts: ITitles = {
-  "/dashboard": { text: "Visualize os dados da sua plantação" },
+  "/dashboard": {
+    text: "Visualize os dados do consumo de água em sua plantação",
+  },
   "/plants": { text: "Cadastre ou Edite uma planta" },
   "/plants/new": { text: "Cadastre uma planta" },
 };
