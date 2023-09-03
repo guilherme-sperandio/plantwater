@@ -17,15 +17,13 @@ export default function PlantForm() {
   const { register, handleSubmit } = useForm<IFormInput>();
 
   function handleSubmitForm(data: IFormInput) {
-    const plantsListRef = ref(database, "plants");
-    const newPlantRef = push(plantsListRef);
-    set(newPlantRef, {
+    set(ref(database, "plants/1"), {
       name: data.name,
       minHumidity: Number(data.minHumidity),
       maxHumidity: Number(data.maxHumidity),
-      lastIrrigation: "none",
+      lastIrrigation: 0,
       timeOfIrrigation: 0,
-      currentHumidity: "none",
+      currentHumidity: 0,
     });
 
     router.push("/plants");
