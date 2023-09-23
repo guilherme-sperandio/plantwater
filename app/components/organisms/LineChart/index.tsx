@@ -9,6 +9,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { IIrrigations } from "../../templates/Charts";
 
 const data = [
   {
