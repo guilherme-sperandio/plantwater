@@ -1,7 +1,48 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { BarChart } from "../../organisms/BarChart";
 import { LineChart } from "../../organisms/LineChart";
+import { onValue, ref } from "firebase/database";
+import { database } from "@/app/services/firebase";
 
 export const Charts = () => {
+  const [irrigations, setIrrigations] = useState<any>([]);
+  const [loading, setLoading] = useState(false);
+
+  console.log(irrigations);
+
+  useEffect(() => {
+    try {
+      setLoading(true);
+      const starCountRef = ref(database, "irrigations");
+      onValue(
+        starCountRef,
+        (snapshot) => {
+          snapshot.forEach((childSnapshot) => {
+            const childKey = childSnapshot.key;
+            const childData = childSnapshot.val();
+            setIrrigations((old: any) => [
+              ...old,
+              {
+                id: childKey,
+                timeStamp: childData.Ts,
+              },
+            ]);
+            console.log(childData);
+          });
+        },
+        {
+          onlyOnce: true,
+        }
+      );
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   return (
     <div className="mt-4">
       <div className="w-full h-[500px]  pt-4 pb-10 pr-2 border-2 border-solid border-grayLight rounded-lg">
