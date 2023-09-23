@@ -26,10 +26,9 @@ export const Charts = () => {
               ...old,
               {
                 id: childKey,
-                timeStamp: childData.Ts,
+                irrigationDate: new Date(childData.Ts),
               },
             ]);
-            console.log(childData);
           });
         },
         {
