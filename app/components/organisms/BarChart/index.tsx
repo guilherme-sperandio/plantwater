@@ -10,21 +10,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const data = [
-  {
-    name: "Manhã",
-    ml: 600,
-  },
-  {
-    name: "Tarde",
-    ml: 8560,
-  },
-  {
-    name: "Noite",
-    ml: 1865,
-  },
-];
-export const BarChart = () => {
+export const BarChart = ({ data }: any) => {
   return (
     <ResponsiveContainer width="100%" height="100%">
       <Chart
